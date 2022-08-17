@@ -1,12 +1,13 @@
 let numSquaresPerSide = 4;
-
+const container = document.querySelector('#container');
 
 function createGrid(numSquaresPerSide){
     let width = 960/numSquaresPerSide;
+    container.replaceChildren();
 
     for (let i = numSquaresPerSide**2; i>0; i--){
         console.log("in the for loop");
-        const container = document.querySelector('#container');
+        
 
         const square = document.createElement('div');
         square.classList.add('square');
@@ -20,7 +21,7 @@ function createGrid(numSquaresPerSide){
 }
 
     //add event listeners to all squares
-function addEventListeners(){
+function addSquareEventListeners(){
     console.log("we're here in the function");
     const squares = container.getElementsByClassName('square');
     console.log(squares);
@@ -35,5 +36,23 @@ function addEventListeners(){
 
     }
 
+function userPrompt(){
+    let numSquares = prompt('How many squares per side? (Limit 100)', '4');
+
+    //error handling if not a number
+    if (isNaN(numSquares)) {
+        numSquares = 4;
+    }
+    else if (numSquares > 100){
+        console.log('too big...making this 100');
+        numSquares = 100;
+    }
+    createGrid(numSquares);
+    addSquareEventListeners();
+
+}
 createGrid(numSquaresPerSide);
-addEventListeners();
+addSquareEventListeners();
+
+let button = document.getElementById('custom');
+button.addEventListener('click', userPrompt);
